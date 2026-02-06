@@ -6,7 +6,7 @@
   <title>Ana & Felipe | Disney+ Experience ✨</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&family=Great+Vibes&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -25,114 +25,105 @@
       overflow-x: hidden;
     }
 
-    #snow-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 1; opacity: 0.6; }
+    #snow-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 1; opacity: 0.5; }
 
-    /* TELAS DE ENTRADA */
+    /* BOTÃO DE ENTRADA */
     #overlay-inicial {
-      position: fixed; inset: 0; background: #000; display: flex; align-items: center; justify-content: center; z-index: 30000; transition: 0.8s;
+      position: fixed; inset: 0; background: #000; 
+      display: flex; align-items: center; justify-content: center; 
+      z-index: 99999; transition: 0.8s;
     }
     
+    .btn-entrar {
+      background: var(--accent); color: #000; border: none; padding: 20px 50px;
+      font-weight: 900; font-size: 1.2rem; border-radius: 50px; cursor: pointer;
+      letter-spacing: 2px; box-shadow: 0 0 30px rgba(0, 224, 255, 0.6);
+      animation: pulsar 2s infinite; text-transform: uppercase;
+    }
+
+    @keyframes pulsar { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+
     #disney-intro-screen {
-      position: fixed; inset: 0; background: #000; display: none; align-items: center; justify-content: center; z-index: 25000; transition: opacity 1s;
+      position: fixed; inset: 0; background: #000; display: none; align-items: center; justify-content: center; z-index: 88888;
     }
     #disney-intro-screen video { width: 100%; height: 100%; object-fit: cover; }
 
-    /* NAVBAR RESPONSIVA */
+    /* NAVBAR - MANTIDA */
     .navbar {
       position: fixed; top: 0; width: 100%; height: 72px;
-      display: flex; align-items: center; padding: 0 4vw;
-      background: var(--navbar); backdrop-filter: blur(10px); z-index: 1000;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
+      display: flex; align-items: center; padding: 0 5%;
+      background: var(--navbar); border-bottom: 1px solid rgba(255,255,255,0.1); z-index: 1000;
+      backdrop-filter: blur(10px);
     }
-    .logo { font-weight: 900; font-size: 1.2rem; letter-spacing: -1px; margin-right: 20px; color: #fff; flex-shrink: 0; }
-    .nav-links { display: flex; gap: 15px; list-style: none; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; }
+    .logo { font-weight: 900; font-size: 1.4rem; color: #fff; margin-right: 20px; }
     
-    @media (max-width: 768px) {
-      .nav-links { gap: 10px; font-size: 0.55rem; }
-      .logo { font-size: 1rem; }
-      .contador-disney { font-size: 0.6rem !important; padding: 4px 8px !important; }
+    .nav-links { display: flex; gap: 15px; list-style: none; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+    .nav-links li { position: relative; cursor: pointer; color: rgba(255,255,255,0.8); }
+
+    .nav-links li::after {
+      content: attr(data-msg);
+      position: absolute; top: 55px; left: 50%; transform: translateX(-50%) scale(0.8);
+      background: linear-gradient(135deg, #00e0ff, #0072d2);
+      color: #fff; padding: 12px 16px; border-radius: 12px;
+      font-size: 0.75rem; width: 200px; text-align: center; text-transform: none;
+      opacity: 0; visibility: hidden; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 10px 25px rgba(0, 224, 255, 0.4); z-index: 5000;
     }
+    .nav-links li:hover::after { opacity: 1; visibility: visible; transform: translateX(-50%) scale(1); }
 
     .contador-disney {
-      margin-left: auto; background: rgba(255,255,255,0.05); padding: 6px 12px; border-radius: 4px;
-      border: 1px solid rgba(0, 224, 255, 0.3); font-size: 0.75rem; font-weight: bold; color: var(--accent); white-space: nowrap;
+      margin-left: auto; background: rgba(0, 224, 255, 0.1); padding: 8px 14px; border-radius: 20px;
+      border: 1px solid var(--accent); font-size: 0.75rem; font-weight: 800; color: var(--accent);
     }
 
-    /* HERO RESPONSIVO */
+    /* HERO - IMAGEM CLARA E VISÍVEL */
     .hero {
-      height: 100vh; display: flex; align-items: center; padding: 0 5vw;
-      background: linear-gradient(to right, var(--bg-dark) 20%, transparent 65%),
+      height: 100vh; display: flex; align-items: center; padding: 0 8%;
+      /* Reduzi a opacidade do gradiente preto para a foto ficar bem clara */
+      background: linear-gradient(to right, rgba(4, 7, 20, 0.6) 20%, transparent 80%),
                   url("img/Firefly_Gemini Flash-01 (1).png") center/cover no-repeat;
       position: relative; z-index: 2;
     }
+    .hero-content { max-width: 700px; }
+    .hero-logo { font-size: clamp(2rem, 5vw, 3.8rem); font-weight: 900; line-height: 1; margin-bottom: 15px; color: #fff; text-transform: uppercase; text-shadow: 2px 2px 10px rgba(0,0,0,0.8); }
+    .hero-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; font-size: 0.85rem; font-weight: 700; text-shadow: 1px 1px 5px rgba(0,0,0,0.8); }
+    .age-rating { border: 1px solid #fff; padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; }
+    .original-tag { color: var(--accent); }
+    .hero-desc { font-size: 1.05rem; color: #f9f9f9; margin-bottom: 35px; line-height: 1.4; max-width: 650px; font-weight: 400; text-shadow: 1px 1px 8px rgba(0,0,0,0.9); }
 
-    .hero-content { max-width: 650px; margin-top: 50px; }
-    .hero-logo { 
-        font-size: clamp(2rem, 8vw, 3.5rem); font-weight: 900; line-height: 1.1; margin-bottom: 15px; 
-        text-transform: uppercase; background: linear-gradient(to bottom, #fff, #b3f0ff);
-        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    }
+    .btn-group { display: flex; gap: 15px; }
+    .btn-play { background: #fff; color: #000; border: none; padding: 12px 35px; border-radius: 4px; font-weight: 900; cursor: pointer; text-transform: uppercase; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; }
+    .btn-details { background: rgba(0, 0, 0, 0.6); color: #fff; border: 2px solid #fff; padding: 12px 35px; border-radius: 4px; font-weight: 900; cursor: pointer; text-transform: uppercase; font-size: 0.9rem; }
 
+    /* MOBILE: IMAGEM SUPER CLARA NO TOPO */
     @media (max-width: 768px) {
-      .hero { 
-        background: linear-gradient(to top, var(--bg-dark) 40%, transparent 90%),
+      .hero {
+        align-items: flex-end; padding-bottom: 60px;
+        background: linear-gradient(to top, rgba(4, 7, 20, 0.8) 30%, transparent 70%),
                     url("img/Firefly_Gemini Flash-01 (1).png") center/cover no-repeat;
-        align-items: flex-end; padding-bottom: 5vh;
       }
-      .hero-content { text-align: center; margin: 0 auto; }
+      .btn-play, .btn-details { flex: 1; justify-content: center; }
     }
-    
-    .btn-group { display: flex; gap: 10px; flex-wrap: wrap; }
-    .btn-play, .btn-details { padding: 12px 25px; border-radius: 4px; font-weight: 700; cursor: pointer; text-transform: uppercase; font-size: 0.8rem; }
-    .btn-play { background: #f9f9f9; color: #000; border: none; display: flex; align-items: center; gap: 8px; }
-    .btn-details { background: rgba(0,0,0,0.5); color: #fff; border: 1px solid #fff; }
 
-    /* CARROSSEL */
-    .section { padding: 30px 5vw; background: var(--bg-dark); position: relative; z-index: 3; }
-    .section-label { font-size: 0.9rem; font-weight: 700; color: #888; letter-spacing: 2px; margin-bottom: 15px; display: block; }
-    .carousel { display: flex; align-items: center; gap: 15px; overflow-x: auto; padding: 20px 0; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+    /* SEÇÕES E CARROSSEL */
+    .section { padding: 40px 5%; background: var(--bg-dark); position: relative; z-index: 3; }
+    .section-label { font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 20px; display: block; }
+    .carousel { display: flex; gap: 20px; overflow-x: auto; padding: 20px 0; scrollbar-width: none; align-items: center; }
     .carousel::-webkit-scrollbar { display: none; }
-
-    .card {
-      flex: 0 0 160px; height: 240px; border-radius: 8px; overflow: hidden; position: relative;
-      cursor: pointer; transition: 0.4s; border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    @media (min-width: 1024px) { .card { flex: 0 0 220px; height: 320px; } }
+    .card { flex: 0 0 200px; height: 280px; border-radius: 12px; overflow: hidden; border: 2px solid rgba(255,255,255,0.1); cursor: pointer; }
     .card img { width: 100%; height: 100%; object-fit: cover; }
 
-    /* EFEITO TE AMO AMOR 3D GELADO */
-    .gelo-3d-container {
-        flex: 0 0 180px; display: flex; flex-direction: column;
-        align-items: center; justify-content: center; padding-left: 20px; gap: 2px;
-    }
-    .gelo-word {
-        font-family: 'Great Vibes', cursive; font-size: 3.2rem; font-weight: bold;
-        color: #e0f7ff; line-height: 0.85; user-select: none;
-        text-shadow: 
-            0 1px 0 #fff, 0 2px 0 #cdeeff, 0 3px 0 #b3e0ff, 
-            0 4px 0 #80d0ff, 0 5px 0 #00e0ff, 0 6px 1px rgba(0,0,0,.1),
-            0 0 15px rgba(0, 224, 255, 0.8);
-    }
-    @media (max-width: 768px) {
-        .gelo-word { font-size: 2.5rem; }
-        .gelo-3d-container { flex: 0 0 130px; }
-    }
+    .gelo-3d-container { flex: 0 0 auto; padding: 0 40px; display: flex; flex-direction: column; align-items: center; }
+    .gelo-word { font-family: 'Inter', sans-serif; font-weight: 900; text-transform: uppercase; color: #fff; font-size: clamp(2.5rem, 7vw, 4rem); text-shadow: 0 0 15px rgba(0, 224, 255, 0.7); }
 
-    /* MODAIS */
-    .modal-bg {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: none;
-      align-items: center; justify-content: center; z-index: 10000; backdrop-filter: blur(15px); padding: 20px;
-    }
-    .modal-content {
-      background: #0f172a; padding: 2rem; border-radius: 15px; border: 1px solid var(--accent);
-      max-width: 500px; width: 100%; color: white;
-    }
-
-    #player-modal { position: fixed; inset: 0; background: #000; display: none; align-items: center; justify-content: center; z-index: 10001; }
+    /* PLAYER E MODAIS */
+    #player-modal { position: fixed; inset: 0; background: #000; display: none; align-items: center; justify-content: center; z-index: 100000; }
     #player-modal video { width: 100%; max-height: 100%; }
-    .close-btn { position: absolute; top: 10px; right: 20px; font-size: 3rem; cursor: pointer; color: #fff; z-index: 10002; }
+    .close-btn { position: absolute; top: 30px; right: 30px; font-size: 3.5rem; color: #fff; cursor: pointer; z-index: 100001; }
+    .modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; z-index: 10000; backdrop-filter: blur(15px); }
+    .modal-content { background: #1a1d29; padding: 30px; border-radius: 20px; border: 1px solid var(--accent); width: 400px; max-width: 90%; text-align: center; }
 
-    #main-content { opacity: 0; transition: 1.5s ease; visibility: hidden; }
+    #main-content { opacity: 0; transition: 1.5s; visibility: hidden; }
   </style>
 </head>
 <body>
@@ -141,7 +132,7 @@
 <audio id="bg-music" loop><source src="sua-musica.mp3" type="audio/mpeg"></audio>
 
 <div id="overlay-inicial">
-    <button onclick="dispararIntro()" style="background:none; border: 2px solid var(--accent); color: var(--accent); padding: 12px 30px; cursor: pointer; font-weight: 800; border-radius: 4px; letter-spacing: 1px;">ENTRAR NA EXPERIÊNCIA</button>
+    <button class="btn-entrar" onclick="dispararIntro()">ENTRAR NA EXPERIÊNCIA ✨</button>
 </div>
 
 <div id="disney-intro-screen">
@@ -152,9 +143,9 @@
     <nav class="navbar">
         <div class="logo">ANA&FELIPE+</div>
         <ul class="nav-links">
-            <li data-msg="Onde tudo começou.">Início</li>
-            <li data-msg="Nossa vida é o filme.">Filmes</li>
-            <li data-msg="Você é a minha lista.">Lista</li>
+            <li data-msg="Você é o meu 'Era uma vez' que se tornou realidade. Minha princesa favorita! 👑">Início</li>
+            <li data-msg="Nem o filme mais lindo da Disney chega perto da nossa história real. ❤️">Filmes</li>
+            <li data-msg="A única coisa que eu assistiria pelo resto da vida é o seu sorriso. ✨">Lista</li>
         </ul>
         <div class="contador-disney" id="tempo">00:00:00</div>
     </nav>
@@ -162,23 +153,21 @@
     <section class="hero">
         <div class="hero-content">
             <h1 class="hero-logo">A Princesa Ana &<br>O Sortudo Felipe</h1>
-            <div style="display: flex; gap: 10px; margin-bottom: 15px; opacity: 0.9; font-weight: bold; font-size: 0.7rem; justify-content: inherit;">
-                <span style="border: 1px solid #fff; padding: 2px 5px; border-radius: 3px;">18+</span>
+            <div class="hero-meta">
+                <span class="age-rating">18+</span>
                 <span>2025</span>
-                <span style="color: var(--accent);">Original Disney+</span>
+                <span class="original-tag">Original Disney+</span>
             </div>
-            <p style="margin-bottom: 25px; line-height: 1.4; max-width: 500px; font-size: 0.9rem;">
-                Era uma vez uma princesa linda, mas que escondia um segredo: o sono e a fome a transformavam na rainha dos bicos! Para sorte do reino, o Felipe apareceu com seu jeito brincalhão. No dia 05/10/2025, o amor venceu o bico.
-            </p>
+            <p class="hero-desc">Era uma vez uma princesa linda, mas que escondia um segredo: o sono e a fome a transformavam na rainha dos bicos! Para sorte do reino, o Felipe apareceu com seu jeito brincalhão. No dia 05/10/2025, o amor venceu o bico.</p>
             <div class="btn-group">
-                <button class="btn-play" onclick="abrirFilme('img/jafoi.mp4')">▶ Reproduzir</button>
-                <button class="btn-details" onclick="abrirCarta()">Detalhes</button>
+                <button class="btn-play" onclick="abrirFilme('img/jafoi.mp4')">▶ REPRODUZIR</button>
+                <button class="btn-details" onclick="abrirCarta()">DETALHES</button>
             </div>
         </div>
     </section>
 
     <section class="section">
-        <span class="section-label">Nossos Momentos São Tipo..</span>
+        <span class="section-label">Nossos Momentos São Tipo Assim.... ↓</span>
         <div class="carousel">
             <div class="card" onclick="abrirFilme('img/a.mp4')"><img src="img/imagem6.jpg.jpeg"></div>
             <div class="card" onclick="abrirFilme('img/b.mp4')"><img src="img/abc1.jpeg"></div>
@@ -187,30 +176,29 @@
             <div class="card" onclick="abrirFilme('img/e.mp4')"><img src="img/abcdef.jpeg"></div>
             
             <div class="gelo-3d-container">
-                <span class="gelo-word">Te</span>
-                <span class="gelo-word">Amo</span>
-                <span class="gelo-word">Amor</span>
+                <span class="gelo-word">TE AMO</span>
+                <span class="gelo-word">AMOR</span>
             </div>
         </div>
     </section>
 </div>
 
-<div class="modal-bg" id="modal-details" onclick="fecharCarta()">
-    <div class="modal-content" onclick="event.stopPropagation()">
-        <h2 style="color:var(--accent); text-align: center; margin-bottom: 15px; font-size: 1.2rem;">Ficha Técnica</h2>
-        <div style="font-size: 0.85rem;">
-            <p style="margin-bottom:10px;"><b style="color:var(--accent)">Gênero:</b> Romance / Comédia Real</p>
-            <p style="margin-bottom:10px;"><b style="color:var(--accent)">Ponto Fraco:</b> Fome e Sono</p>
-            <p style="margin-bottom:10px;"><b style="color:var(--accent)">Superpoder:</b> Beijos Terapêuticos</p>
-            <p><b style="color:var(--accent)">Estreia:</b> 05/10/2025</p>
-        </div>
-        <button class="btn-play" style="width:100%; margin-top:20px; justify-content:center;" onclick="fecharCarta()">FECHAR</button>
-    </div>
+<div id="player-modal">
+    <span class="close-btn" onclick="fecharFilme()">&times;</span>
+    <video id="v-player" playsinline controls></video>
 </div>
 
-<div id="player-modal">
-    <span class="close-btn" onclick="fecharFilme()">×</span>
-    <video id="v-player" playsinline controls></video>
+<div class="modal-bg" id="modal-details" onclick="fecharCarta()">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <h2 style="color:var(--accent); margin-bottom: 20px; font-weight: 900;">FICHA TÉCNICA</h2>
+        <div style="text-align: left; font-size: 0.9rem; line-height: 1.8;">
+            <p>🍿 <b>Título:</b> O Bico Mais Lindo do Mundo</p>
+            <p>✨ <b>Direção:</b> Destino & Felipe</p>
+            <p>🍫 <b>Cura para o Bico:</b> Chocolate e carinho</p>
+            <p>🗓️ <b>Estreia:</b> 05 de Outubro de 2025</p>
+        </div>
+        <button class="btn-play" style="width:100%; margin-top:20px; border-radius: 10px; justify-content: center;" onclick="fecharCarta()">FECHAR</button>
+    </div>
 </div>
 
 <script>
@@ -219,38 +207,23 @@
     const introVideo = document.getElementById('videoDisneyIntro');
     const main = document.getElementById('main-content');
     const musica = document.getElementById('bg-music');
+    const vPlayer = document.getElementById('v-player');
+    const playerModal = document.getElementById('player-modal');
 
     function dispararIntro() {
         overlay.style.opacity = '0';
         introVideo.muted = false; 
-        setTimeout(() => {
-            overlay.style.display = 'none';
-            introScreen.style.display = 'flex';
-            introVideo.play().catch(() => { introVideo.muted = true; introVideo.play(); });
-        }, 800);
+        setTimeout(() => { overlay.style.display = 'none'; introScreen.style.display = 'flex'; introVideo.play().catch(() => { introVideo.muted = true; introVideo.play(); }); }, 800);
     }
 
     introVideo.onended = () => {
         introScreen.style.opacity = '0';
-        setTimeout(() => {
-            introScreen.style.display = 'none';
-            main.style.visibility = 'visible'; main.style.opacity = '1';
-            musica.play().catch(()=>{});
-        }, 1000);
+        setTimeout(() => { introScreen.style.display = 'none'; main.style.visibility = 'visible'; main.style.opacity = '1'; musica.play().catch(()=>{}); }, 1000);
     };
 
-    function abrirFilme(url) {
-        const modal = document.getElementById('player-modal');
-        const video = document.getElementById('v-player');
-        video.src = url; modal.style.display = 'flex';
-        video.play(); musica.pause();
-    }
-
-    function fecharFilme() {
-        document.getElementById('player-modal').style.display = 'none';
-        document.getElementById('v-player').pause(); musica.play();
-    }
-
+    function abrirFilme(url) { vPlayer.src = url; playerModal.style.display = 'flex'; vPlayer.play(); musica.pause(); }
+    function fecharFilme() { playerModal.style.display = 'none'; vPlayer.pause(); vPlayer.src = ""; musica.play().catch(()=>{}); }
+    vPlayer.onended = () => { fecharFilme(); };
     function abrirCarta() { document.getElementById('modal-details').style.display = 'flex'; }
     function fecharCarta() { document.getElementById('modal-details').style.display = 'none'; }
 
@@ -269,14 +242,10 @@
     let particles = [];
     function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
     window.onresize = resize; resize();
-    const particleCount = window.innerWidth < 768 ? 40 : 100;
-    for(let i=0; i<particleCount; i++) particles.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, r:Math.random()*2+1, s:Math.random()*0.6+0.2});
+    for(let i=0; i<60; i++) particles.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, r:Math.random()*2+1, s:Math.random()*0.5+0.2});
     function snow() {
         ctx.clearRect(0,0,canvas.width,canvas.height); ctx.fillStyle = "#fff";
-        particles.forEach(p => {
-            ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI*2); ctx.fill();
-            p.y += p.s; if(p.y > canvas.height) p.y = -10;
-        });
+        particles.forEach(p => { ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI*2); ctx.fill(); p.y += p.s; if(p.y > canvas.height) p.y = -10; });
         requestAnimationFrame(snow);
     }
     snow();
